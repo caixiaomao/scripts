@@ -14,7 +14,6 @@ else
   echo_error "oh-my-zsh 安装失败: curl 或 wget 未安装"
   exit 1
 fi
-
 # 执行安装命令
 sh -c "$install_cmd" && echo_success "oh-my-zsh 安装成功"
 
@@ -28,11 +27,11 @@ if command -v git &> /dev/null; then
   echo_info "修改 oh-my-zsh 插件配置"
   sed -i -e 's/plugins=(.*)/plugins=(\1 z git zsh-syntax-highlighting zsh-autosuggestions)/' ~/.zshrc
 else
-    echo_error "oh-my-zsh 插件安装失败：git 未安装、下载插件失败或修改配置失败"
+    echo_error "oh-my-zsh 插件安装失败：git 未安装"
     exit 1
 fi
 
 # 完成安装后输出
-echo_info "重载 oh-my-zsh 配置文件"
+echo_info "重载 oh-my-zsh 配置"
 source ~/.zshrc
-echo_success "oh-my-zsh 安装完成"
+echo_success "oh-my-zsh 及插件安装配置完成"
