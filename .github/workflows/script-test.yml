@@ -18,7 +18,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Check files
-        run: ls -la
+        run: |
+          ls -la
+          ls -la ./tools
 
       - name: Run script test
         run: |
