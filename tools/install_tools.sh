@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 引入 通用工具
-source ./utils.sh
+source ./tools/utils.sh
 
 # 检测 Linux 发行版并确定包管理器
 detect_linux() {
