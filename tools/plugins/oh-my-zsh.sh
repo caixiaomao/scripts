@@ -7,9 +7,9 @@ source ./tools/utils.sh
 echo_info "安装 oh-my-zsh"
 # 检测并执行合适的安装命令
 if command -v curl &> /dev/null; then
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && echo_success "oh-my-zsh 安装成功"
+  sh -c "$(curl -fsSL https://install.ohmyz.sh)" && echo_success "oh-my-zsh 安装成功"
 elif command -v wget &> /dev/null; then
-  sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" && echo_success "oh-my-zsh 安装成功"
+  sh -c "$(wget -O- https://install.ohmyz.sh)" && echo_success "oh-my-zsh 安装成功"
 else
   echo_error "oh-my-zsh 安装失败: curl 或 wget 未安装"
   exit 1
