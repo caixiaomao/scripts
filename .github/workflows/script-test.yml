@@ -22,5 +22,5 @@ jobs:
 
       - name: Run script test
         run: |
-          chmod +x ./scripts/tools/plugins/ohmyzsh.sh ./scripts/tools/utils.sh
-          ./scripts/tools/plugins/ohmyzsh.sh
+          chmod +x ./tools/plugins/ohmyzsh.sh ./tools/utils.sh
+          ./tools/plugins/ohmyzsh.sh
