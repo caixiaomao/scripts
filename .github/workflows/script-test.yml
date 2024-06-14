@@ -1,5 +1,10 @@
 name: Script Test
 
+on:
+  push:
+    branches:
+      - main
+
 jobs:
   script-test:
     runs-on: ${{ matrix.os }}
