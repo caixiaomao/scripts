@@ -10,7 +10,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, centos--latest, debian-latest]
+        os: [ubuntu, centos, debian]
 
 
     steps:
