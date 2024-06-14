@@ -4,32 +4,35 @@
 source ../utils.sh
 
 # 安装 Oh My Zsh
-echo_info "安装 oh-my-zsh"
-# 检测 curl 或 wget 是否存在，并选择合适的命令进行安装
-if command -v curl > /dev/null; then
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    echo_success "oh-my-zsh 安装成功"
-elif command -v wget > /dev/null; then
-    sh -c "$(wget -qO- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    echo_success "oh-my-zsh 安装成功"
+echo_info "开始安装 oh-my-zsh"
+# 检测并执行合适的安装命令
+if command -v curl &> /dev/null; then
+  install_cmd="curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
+elif command -v wget &> /dev/null; then
+  install_cmd="wget -qO- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
 else
-    echo_error "安装 oh-my-zsh 失败: curl 或 wget 未安装"
-    exit 1
+  echo_error "oh-my-zsh 安装失败: curl 或 wget 未安装"
+  exit 1
 fi
 
-# 安装 zsh-syntax-highlighting 插件
-echo_info "安装 zsh-syntax-highlighting 插件"
-# 检测 git 是否存在
-if command -v git > /dev/null; then
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+# 执行安装命令
+sh -c "$install_cmd" && echo_success "oh-my-zsh 安装成功"
+
+# 安装 oh-my-zsh 插件
+echo_info "安装 oh-my-zsh 插件"
+if command -v git &> /dev/null; then
   echo_info "备份 zsh 配置"
   cp ~/.zshrc ~/.zshrc.bak
-  echo_info "增加 zsh-syntax-highlighting 插件"
-  sed -i '/^plugins=(/{s/)/ zsh-autosuggestions)/}' ~/.zshrc
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+  echo_info "修改 oh-my-zsh 插件配置"
+  sed -i -e 's/plugins=(.*)/plugins=(\1 z git zsh-syntax-highlighting zsh-autosuggestions)/' ~/.zshrc
 else
-    echo_error "安装 zsh-syntax-highlighting 插件失败：git 未安装或者修改配置失败"
+    echo_error "oh-my-zsh 插件安装失败：git 未安装、下载插件失败或修改配置失败"
     exit 1
 fi
 
 # 完成安装后输出
-echo_success "zsh-syntax-highlighting 插件安装成功"
+echo_info "重载 oh-my-zsh 配置文件"
+source ~/.zshrc
+echo_success "oh-my-zsh 安装完成"
