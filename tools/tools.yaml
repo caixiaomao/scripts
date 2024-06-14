@@ -7,6 +7,6 @@ tools:
   - name: vim
   - name: htop
   - name: ohmyzsh
-    script: "plugins/ohmyzsh.sh"
+    script: "plugins/oh-my-zsh.sh"
     dependencies:
       - zsh
