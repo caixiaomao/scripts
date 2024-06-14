@@ -1,0 +1,12 @@
+tools:
+  - name: yq
+  - name: bc
+  - name: curl
+  - name: wget
+  - name: git
+  - name: vim
+  - name: htop
+  - name: ohmyzsh
+    script: "plugins/ohmyzsh.sh"
+    dependencies:
+      - zsh
