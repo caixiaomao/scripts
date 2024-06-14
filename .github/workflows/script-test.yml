@@ -12,9 +12,13 @@ jobs:
       matrix:
         os: [ubuntu-latest, centos--latest, debian-latest]
 
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Check files
+        run: ls -la
 
       - name: Run script test
         run: |
