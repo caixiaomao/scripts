@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 引入 通用工具
-source ../utils.sh
+source ./tools/utils.sh
 
 # 安装 Oh My Zsh
 echo_info "开始安装 oh-my-zsh"
