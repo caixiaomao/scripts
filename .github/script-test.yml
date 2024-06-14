@@ -1,0 +1,17 @@
+name: Script Test
+
+jobs:
+  script-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, centos--latest, debian-latest]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run script test
+        run: |
+          chmod +x ./tools/plugins/ohmyzsh.sh ./tools/utils.sh
+          ./tools/plugins/ohmyzsh.sh
