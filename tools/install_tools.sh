@@ -24,13 +24,13 @@ detect_linux() {
     case "$DISTRO" in
         Ubuntu|Debian)
             PKG_MANAGER="apt"
-            UPDATE_CMD="$PKG_MANAGER update"
-            INSTALL_CMD="$PKG_MANAGER install -y"
+            UPDATE_CMD="sudo $PKG_MANAGER update -y"
+            INSTALL_CMD="sudo $PKG_MANAGER install -y"
             ;;
         CentOS|RedHat|Fedora)
             PKG_MANAGER="yum"
-            UPDATE_CMD="$PKG_MANAGER update -y"
-            INSTALL_CMD="$PKG_MANAGER install -y"
+            UPDATE_CMD="sudo $PKG_MANAGER update -y"
+            INSTALL_CMD="sudo $PKG_MANAGER install -y"
             ;;
         *)
             echo_error "不支持的 Linux 版本: $DISTRO-$VERSION"
