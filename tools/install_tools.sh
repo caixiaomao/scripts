@@ -1,22 +1,47 @@
 #!/bin/bash
 
+# 引入 通用工具
+source ./utils.sh
+
 # 检测 Linux 发行版并确定包管理器
-detect_pkg_manager() {
-    if [ -f /etc/debian_version ]; then
-        PKG_MANAGER="apt-get"
-        UPDATE_CMD="$PKG_MANAGER update"
-        INSTALL_CMD="$PKG_MANAGER install -y"
+detect_linux() {
+    if command -v lsb_release &> /dev/null; then
+        DISTRO=$(lsb_release -si)
+        VERSION=$(lsb_release -sr)
+    elif [ -f /etc/os-release ]; then
+        . /etc/os-release
+        DISTRO=$ID
+        VERSION=$VERSION_ID
+    elif [ -f /etc/debian_version ]; then
+        DISTRO="Debian"
+        VERSION=$(cat /etc/debian_version)
     elif [ -f /etc/redhat-release ]; then
-        PKG_MANAGER="yum"
-        UPDATE_CMD="$PKG_MANAGER makecache"
-        INSTALL_CMD="$PKG_MANAGER install -y"
-    else
-        echo "Unsupported distribution. Exiting."
-        exit 1
+        DISTRO="RedHat"
+        VERSION=$(cat /etc/redhat-release | sed 's/.*release \([0-9]*\).*/\1/')
     fi
 
+    echo_info "Linux 版本: $DISTRO-$VERSION"
+    case "$DISTRO" in
+        Ubuntu|Debian)
+            PKG_MANAGER="apt"
+            UPDATE_CMD="$PKG_MANAGER update"
+            INSTALL_CMD="$PKG_MANAGER install -y"
+            ;;
+        CentOS|RedHat|Fedora)
+            PKG_MANAGER="yum"
+            UPDATE_CMD="$PKG_MANAGER update -y"
+            INSTALL_CMD="$PKG_MANAGER install -y"
+            ;;
+        *)
+            echo_error "不支持的 Linux 版本: $DISTRO-$VERSION"
+            exit 1
+            ;;
+    esac
+
     # 更新包索引
+    echo_info "更新包索引..."
     $UPDATE_CMD
+    echo_success "更新包索引完成"
 }
 
 # 检查和安装依赖
@@ -84,4 +109,4 @@ install_tools() {
 }
 
 # 主函数
-install_tools
+detect_linux

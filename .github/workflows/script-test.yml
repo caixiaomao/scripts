@@ -24,5 +24,6 @@ jobs:
 
       - name: Run script test
         run: |
-          chmod +x ./tools/plugins/oh-my-zsh.sh ./tools/utils.sh
-          sh -c "./tools/plugins/oh-my-zsh.sh"
+          chmod +x ./tools/plugins/oh-my-zsh.sh ./tools/utils.sh ./tools/install_tools.sh
+          sh -c "./tools/install_tools.sh"
+#          sh -c "./tools/plugins/oh-my-zsh.sh"
