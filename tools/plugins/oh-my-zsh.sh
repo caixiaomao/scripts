@@ -4,18 +4,16 @@
 source ./tools/utils.sh
 
 # 安装 Oh My Zsh
-echo_info "开始安装 oh-my-zsh"
+echo_info "安装 oh-my-zsh"
 # 检测并执行合适的安装命令
 if command -v curl &> /dev/null; then
-  install_cmd="curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && echo_success "oh-my-zsh 安装成功"
 elif command -v wget &> /dev/null; then
-  install_cmd="wget -qO- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
+  sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" && echo_success "oh-my-zsh 安装成功"
 else
   echo_error "oh-my-zsh 安装失败: curl 或 wget 未安装"
   exit 1
 fi
-# 执行安装命令
-sh -c "$install_cmd" && echo_success "oh-my-zsh 安装成功"
 
 # 安装 oh-my-zsh 插件
 echo_info "安装 oh-my-zsh 插件"
