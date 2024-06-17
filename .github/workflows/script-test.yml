@@ -17,13 +17,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Check files
-        run: |
-          ls -la
-          ls -la ./tools
+#      - name: Check files
+#        run: |
+#          ls -la
+#          ls -la ./tools
 
       - name: Run script test
         run: |
-          chmod +x ./tools/plugins/oh-my-zsh.sh ./tools/utils.sh ./tools/install_tools.sh
-          sh -c "./tools/install_tools.sh"
-#          sh -c "./tools/plugins/oh-my-zsh.sh"
+          chmod +x ./tools/install.sh
+          sh -c "./tools/install.sh"

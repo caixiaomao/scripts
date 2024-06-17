@@ -5,5 +5,6 @@
 
 - 安装工具
 ```shell
-chmod +x install_tools.sh plugins/*.sh
+chmod +x install.sh
+./install.sh
 ```
