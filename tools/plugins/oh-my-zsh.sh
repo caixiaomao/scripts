@@ -5,6 +5,12 @@ source ./tools/utils.sh
 
 # 安装 Oh My Zsh
 echo_info "安装 oh-my-zsh"
+# 检查 zsh 版本
+zsh_version=$(zsh --version | grep -oP '\d+\.\d+\.\d+')
+if (( $(echo "$zsh_version < 5.0.8" | bc -l) )); then
+    echo_error "zsh 版本必须大于等于 5.0.8，当前版本: $zsh_version"
+    exit 1
+fi
 # 检测并执行合适的安装命令
 if command -v curl &> /dev/null; then
   sh -c "$(curl -fsSL https://install.ohmyz.sh)" && echo_success "oh-my-zsh 安装成功"
