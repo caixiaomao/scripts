@@ -1,4 +1,5 @@
 #!/bin/bash
+export LANG=en_US.UTF-8
 
 # 定义颜色
 RED='\033[0;31m'     # 错误消息颜色
@@ -24,8 +25,15 @@ echo_error() {
     echo -e "${RED}$1${NC}"
 }
 
+# 初始化变量
+initVar() {
+    INSTALL_CMD='apt -y install'
+    REMOVE_CMD='apt -y remove'
+    UPDATE_CMD="apt -y update"
+}
+
 # 检测 Linux 发行版并确定包管理器
-detect_linux() {
+checkSystem() {
     if command -v lsb_release &> /dev/null; then
         DISTRO=$(lsb_release -si)
         VERSION=$(lsb_release -sr)
@@ -44,14 +52,12 @@ detect_linux() {
     echo_info "Linux 版本: $DISTRO-$VERSION"
     case "$DISTRO" in
         Ubuntu|Debian)
-            PKG_MANAGER="apt"
-            UPDATE_CMD="sudo $PKG_MANAGER update -y"
-            INSTALL_CMD="sudo $PKG_MANAGER install -y"
+            UPDATE_CMD="apt -y update"
+            INSTALL_CMD="apt -y install"
             ;;
         CentOS|RedHat|Fedora)
-            PKG_MANAGER="yum"
-            UPDATE_CMD="sudo $PKG_MANAGER update -y"
-            INSTALL_CMD="sudo $PKG_MANAGER install -y"
+            UPDATE_CMD="yum -y update"
+            INSTALL_CMD="yum -y install"
             ;;
         *)
             echo_error "不支持的 Linux 版本: $DISTRO-$VERSION"
@@ -66,22 +72,20 @@ detect_linux() {
 }
 
 # 定义安装函数
-install_git() {
-  echo "正在安装 Git..."
-  # Git 安装代码
+installBasicTools() {
+  echo_info "安装基础依赖..."
+  $INSTALL_CMD curl wget git vim zsh
+  echo_success "基础依赖安装完成"
 }
 
-install_zsh() {
-  echo "正在安装 Zsh..."
-  # Zsh 安装代码
+# 安装 Docker
+installDocker() {
+  echo_info "安装 docker..."
+  echo_success "docker 安装完成"
 }
 
-install_vim() {
-  echo "正在安装 Vim..."
-  # Vim 安装代码
-}
-
-install_ohmyzsh() {
+# 安装并配置 Oh My Zsh
+installOhMyZsh() {
   # 安装 Oh My Zsh
   echo_info "安装 oh-my-zsh"
   # 检查 zsh 版本
@@ -120,54 +124,39 @@ install_ohmyzsh() {
   echo_success "oh-my-zsh 及插件安装配置完成"
 }
 
-# 定义选项和对应的安装函数
-tools=(
-  "Git:install_git"
-  "Vim:install_vim"
-  "Oh My Zsh:install_ohmyzsh"
-  "Quit::"
-)
-
 # 显示选项菜单
-show_menu() {
-  echo_info "请选择要安装的工具 (多个用逗号分隔):"
-  for i in "${!tools[@]}"; do
-    tool=${tools[$i]%%:*}
-    echo "$((i+1))) $tool"
-  done
-  read -p "输入选项: " choices
+showMenu() {
+    echo_info "作者: caixiaomao"
+    echo_info "版本: v1.0.0"
+    echo_success "=============================================================="
+    echo_info     "1.Oh My ZSH"
+    echo_info     "2.Docker"
+    echo_info     "3.其它"
+    echo_info     "4.退出"
+    echo_success "=============================================================="
+    read -r -p "请选择:" selectInstallType
+    case ${selectInstallType} in
+    1)
+        installOhMyZsh
+        showMenu
+        ;;
+    2)
+        installDocker
+        showMenu
+        ;;
+    3)
+        echo_success "其它测试"
+        showMenu
+        ;;
+    4)
+        exit 1
+        ;;
+    esac
 }
 
-# 解析用户选择并执行相应操作
-parse_choice() {
-  IFS=',' read -ra selected <<< "$choices"
-  for choice in "${selected[@]}"; do
-    index=$((choice-1))
-    if [[ "$index" -ge 0 && "$index" -lt "${#tools[@]}" ]]; then
-      tool=${tools[$index]%%:*}
-      install_func=${tools[$index]#*:}
 
-      case "$tool" in
-        Quit)
-          echo_info "退出安装."
-          exit 0
-          ;;
-        *)
-          if [ -n "$install_func" ]; then
-            $install_func
-          else
-            echo_error "无效选项: $choice"
-          fi
-          ;;
-      esac
-    else
-      echo_error "无效选项: $choice"
-    fi
-  done
-}
-
-# 主程序
-while true; do
-  show_menu
-  parse_choice
-done
+# 初始化变量
+initVar
+checkSystem
+installBasicTools
+showMenu
