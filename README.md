@@ -11,5 +11,5 @@ chmod +x install.sh
 
 ## 测试
 ```shell
-docker run -d --name debian-bullseye debian:bullseye
+docker run --rm -it debian:bullseye bash
 ```
