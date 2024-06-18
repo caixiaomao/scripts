@@ -49,13 +49,15 @@ checkSystem() {
         VERSION=$(cat /etc/redhat-release | sed 's/.*release \([0-9]*\).*/\1/')
     fi
 
+    # 将 DISTRO 转换为小写
+    DISTRO=$(echo "$DISTRO" | tr '[:upper:]' '[:lower:]')
     echo_info "Linux 版本: $DISTRO-$VERSION"
     case "$DISTRO" in
-        Ubuntu|Debian)
+        ubuntu|debian)
             UPDATE_CMD="apt -y update"
             INSTALL_CMD="apt -y install"
             ;;
-        CentOS|RedHat|Fedora)
+        centos|redhat|fedora)
             UPDATE_CMD="yum -y update"
             INSTALL_CMD="yum -y install"
             ;;
