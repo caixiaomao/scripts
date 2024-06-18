@@ -107,6 +107,7 @@ configOhMyZsh() {
     cp ~/.zshrc ~/.zshrc.bak
 
     echo_info "安装 oh-my-zsh 插件..."
+    echo "Before: $ZSH_CUSTOM"
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
@@ -114,6 +115,7 @@ configOhMyZsh() {
     sed -i -e 's/plugins=(\(.*\))/plugins=(\1 z zsh-syntax-highlighting zsh-autosuggestions)/' ~/.zshrc
 
     echo_info "安装 spaceship 主题..."
+    echo "After: $ZSH_CUSTOM"
     git clone https://github.com/spaceship-prompt/spaceship-prompt.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/spaceship-prompt --depth=1
     ln -s ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/spaceship-prompt/spaceship.zsh-theme ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/spaceship.zsh-theme
     echo_info "配置 spaceship 主题..."
