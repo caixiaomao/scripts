@@ -6,23 +6,23 @@ on:
       - main
 
 jobs:
-  script-test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, ubuntu-22.04, ubuntu-20.04]
+  centos:
+    runs-on: ubuntu-latest
+    container: centos:8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run script on CentOS
+        run: |
+          chmod +x ./tools/install.sh
+          sh -c "./tools/install.sh"
 
+  debian:
+    runs-on: ubuntu-latest
+    container: debian:12.5
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-#      - name: Check files
-#        run: |
-#          ls -la
-#          ls -la ./tools
-
-      - name: Run script test
+      - uses: actions/checkout@v4
+      - name: Run script on Debian
         run: |
           chmod +x ./tools/install.sh
           sh -c "./tools/install.sh"
