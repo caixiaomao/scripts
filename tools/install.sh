@@ -107,15 +107,15 @@ configOhMyZsh() {
     cp ~/.zshrc ~/.zshrc.bak
 
     echo_info "安装 oh-my-zsh 插件..."
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}"/plugins/zsh-syntax-highlighting
+    git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}"/plugins/zsh-autosuggestions
 
     echo_info "配置 oh-my-zsh 插件..."
     sed -i -e 's/plugins=(\(.*\))/plugins=(\1 z zsh-syntax-highlighting zsh-autosuggestions)/' ~/.zshrc
 
     echo_info "安装 spaceship 主题..."
-    git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" --depth=1
-    ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+    git clone https://github.com/spaceship-prompt/spaceship-prompt.git "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}"/themes/spaceship-prompt --depth=1
+    ln -s "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}"/themes/spaceship-prompt/spaceship.zsh-theme "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}"/themes/spaceship.zsh-theme
     echo_info "配置 spaceship 主题..."
     sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="spaceship"/' ~/.zshrc
 
