@@ -76,7 +76,7 @@ checkSystem() {
 # 定义安装函数
 installBasicTools() {
   echo_info "安装基础依赖..."
-  $INSTALL_CMD curl wget git vim zsh
+  $INSTALL_CMD bc curl wget git vim zsh
   echo_success "基础依赖安装完成"
 }
 
@@ -114,7 +114,7 @@ installOhMyZsh() {
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
     echo_info "修改 oh-my-zsh 插件配置"
-    sed -i -e 's/plugins=(.*)/plugins=(\1 z git zsh-syntax-highlighting zsh-autosuggestions)/' ~/.zshrc
+    sed -i -e 's/plugins=(\(.*\))/plugins=(\1 z zsh-syntax-highlighting zsh-autosuggestions)/' ~/.zshrc
   else
       echo_error "oh-my-zsh 插件安装失败：git 未安装"
       exit 1
