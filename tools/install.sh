@@ -88,7 +88,6 @@ installDocker() {
 
 # 安装并配置 Oh My Zsh
 installOhMyZsh() {
-  # 安装 Oh My Zsh
   echo_info "安装 oh-my-zsh..."
   # 检测并执行合适的安装命令
   if command -v curl &> /dev/null; then
@@ -99,25 +98,32 @@ installOhMyZsh() {
     echo_error "oh-my-zsh 安装失败"
     exit 1
   fi
+}
 
-  # 安装 oh-my-zsh 插件
-  echo_info "安装 oh-my-zsh 插件"
+# 安装 Oh My Zsh 插件及主题
+configOhMyZsh() {
   if command -v git &> /dev/null; then
     echo_info "备份 zsh 配置"
     cp ~/.zshrc ~/.zshrc.bak
+
+    echo_info "安装 oh-my-zsh 插件..."
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-    echo_info "修改 oh-my-zsh 插件配置"
+
+    echo_info "配置 oh-my-zsh 插件..."
     sed -i -e 's/plugins=(\(.*\))/plugins=(\1 z zsh-syntax-highlighting zsh-autosuggestions)/' ~/.zshrc
+
+    echo_info "安装 spaceship 主题..."
+    git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" --depth=1
+    ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+    echo_info "配置 spaceship 主题..."
+    sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="spaceship"/' ~/.zshrc
+
+    echo_success "oh-my-zsh 插件、主题安装配置完成，请执行 source ~/.zshrc 使配置生效"
   else
-      echo_error "oh-my-zsh 插件安装失败：git 未安装"
+      echo_error "oh-my-zsh 插件、主题安装失败"
       exit 1
   fi
-
-  # 完成安装后输出
-  echo_info "重载 oh-my-zsh 配置"
-  source ~/.zshrc
-  echo_success "oh-my-zsh 及插件安装配置完成"
 }
 
 # 显示选项菜单
@@ -126,9 +132,10 @@ showMenu() {
     echo_info "版本: v1.0.0"
     echo_success "=============================================================="
     echo_info     "1.Oh My ZSH"
-    echo_info     "2.Docker"
-    echo_info     "3.其它"
-    echo_info     "4.退出"
+    echo_info     "2.Oh My ZSH 插件及主题配置"
+    echo_info     "3.Docker"
+    echo_info     "4.其它"
+    echo_info     "5.退出"
     echo_success "=============================================================="
     read -r -p "请选择:" selectInstallType
     case ${selectInstallType} in
@@ -137,14 +144,18 @@ showMenu() {
         showMenu
         ;;
     2)
-        installDocker
+        configOhMyZsh
         showMenu
         ;;
     3)
-        echo_success "其它测试"
+        installDocker
         showMenu
         ;;
     4)
+        echo_info "其它"
+        showMenu
+        ;;
+    5)
         exit 1
         ;;
     esac
