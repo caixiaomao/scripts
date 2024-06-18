@@ -67,7 +67,7 @@ checkSystem() {
             ;;
     esac
 
-    # 更新包索引
+    # 更新包索引 todo：优化，只在脚本执行时更新一次
     echo_info "更新包索引..."
     $UPDATE_CMD
     echo_success "更新包索引完成"
