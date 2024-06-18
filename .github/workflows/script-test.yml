@@ -11,7 +11,7 @@ jobs:
     container: centos:8
     steps:
       - uses: actions/checkout@v4
-      - name: Run script on centos
+      - name: Run script test
         run: |
           chmod +x ./tools/install.sh
           sh -c "./tools/install.sh"
@@ -21,7 +21,7 @@ jobs:
     container: debian:12.5
     steps:
       - uses: actions/checkout@v4
-      - name: Run script on debian
+      - name: Run script test
         run: |
           chmod +x ./tools/install.sh
           sh -c "./tools/install.sh"
@@ -31,7 +31,7 @@ jobs:
     container: ubuntu:20.04
     steps:
       - uses: actions/checkout@v4
-      - name: Run script on ubuntu-20.04
+      - name: Run script test
         run: |
           chmod +x ./tools/install.sh
           sh -c "./tools/install.sh"
@@ -41,7 +41,7 @@ jobs:
     container: ubuntu:22.04
     steps:
       - uses: actions/checkout@v4
-      - name: Run script on ubuntu-22.04
+      - name: Run script test
         run: |
           chmod +x ./tools/install.sh
           sh -c "./tools/install.sh"
