@@ -8,3 +8,8 @@
 chmod +x install.sh
 ./install.sh
 ```
+
+## 测试
+```shell
+docker run -d --name debian-bullseye debian:bullseye
+```
