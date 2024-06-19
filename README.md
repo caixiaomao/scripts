@@ -5,7 +5,7 @@
 
 - 安装工具
 ```shell
-wget -P /root -N --no-check-certificate "https://raw.githubusercontent.com/mack-a/v2ray-agent/master/install.sh" && chmod 700 /root/install.sh && /root/install.sh
+wget -P /root -N --no-check-certificate "https://raw.githubusercontent.com/caixiaomao/scripts/main/tools/install.sh" && chmod 700 /root/install.sh && /root/install.sh
 ```
 
 ## 测试
