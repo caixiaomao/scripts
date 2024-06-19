@@ -27,6 +27,7 @@ echo_error() {
 
 # 初始化变量
 initVar() {
+    INITIALIZED=0
     INSTALL_CMD='apt -y install'
     REMOVE_CMD='apt -y remove'
     UPDATE_CMD="apt -y update"
@@ -67,10 +68,15 @@ checkSystem() {
             ;;
     esac
 
-    # 更新包索引 todo：优化，只在脚本执行时更新一次
-    echo_info "更新包索引..."
-    $UPDATE_CMD
-    echo_success "更新包索引完成"
+    # 更新包索引
+    if [ "$INITIALIZED" -eq 0 ]; then
+        echo_info "更新包索引..."
+        $UPDATE_CMD
+        echo_success "更新包索引完成"
+        INITIALIZED=1
+    else
+        echo_info "已更新包索引，跳过"
+    fi
 }
 
 # 定义安装函数
@@ -132,7 +138,7 @@ showMenu() {
     echo_info "版本: v1.0.0"
     echo_success "=============================================================="
     echo_info     "1.Oh My ZSH"
-    echo_info     "2.Oh My ZSH 插件及主题配置"
+    echo_info     "2.Oh My ZSH 插件及主题"
     echo_info     "3.Docker"
     echo_info     "4.其它"
     echo_info     "5.退出"
