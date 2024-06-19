@@ -97,9 +97,9 @@ installOhMyZsh() {
   echo_info "安装 oh-my-zsh..."
   # 检测并执行合适的安装命令
   if command -v curl &> /dev/null; then
-    echo "y" | sh -c "$(curl -fsSL https://install.ohmyz.sh)" && echo_success "oh-my-zsh 安装成功"
+    sh -c "$(curl -fsSL https://install.ohmyz.sh)" && echo_success "oh-my-zsh 安装成功"
   elif command -v wget &> /dev/null; then
-    echo "y" | sh -c "$(wget -O- https://install.ohmyz.sh)" && echo_success "oh-my-zsh 安装成功"
+    sh -c "$(wget -O- https://install.ohmyz.sh)" && echo_success "oh-my-zsh 安装成功"
   else
     echo_error "oh-my-zsh 安装失败"
     exit 1
