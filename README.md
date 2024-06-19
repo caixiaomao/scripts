@@ -14,4 +14,6 @@ chmod +x install.sh
 docker run --rm -it debian:bullseye bash
 
 docker run --rm -it ubuntu:22.04 bash
+
+docker run --rm -it centos:centos7.9.2009 bash
 ```
